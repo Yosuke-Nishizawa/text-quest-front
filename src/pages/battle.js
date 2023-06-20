@@ -32,16 +32,19 @@ export default function Battle() {
   const onClickEnemy = async (enemyMetadata) => {
     setBattleResult(initialBattleResult);
     const playerMetadata = tokens[parseInt(loginCharacterTokenId)];
-    const response = await fetch("/api/battle", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        player: { name: playerMetadata.name, items: playerMetadata.items },
-        enemy: { name: enemyMetadata.name, items: enemyMetadata.items },
-      }),
-    });
+    const response = await fetch(
+      "https://us-central1-text-quest-234a7.cloudfunctions.net/battle",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          player: { name: playerMetadata.name, items: playerMetadata.items },
+          enemy: { name: enemyMetadata.name, items: enemyMetadata.items },
+        }),
+      }
+    );
     const result = await response.json();
     setBattleResult(result);
   };
