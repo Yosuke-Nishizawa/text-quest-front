@@ -5,6 +5,9 @@
       "@components/*": ["components/*"],
       "@styles/*": ["styles/*"],
       "@constants/*": ["constants/*"],
+      "@contracts/*": ["contracts/*"],
+      "@utils/*": ["utils/*"],
+      "@repositories/*": ["repositories/*"],
     }
   }
 }
