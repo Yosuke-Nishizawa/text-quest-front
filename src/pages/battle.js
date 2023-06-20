@@ -9,11 +9,12 @@ export default function Battle() {
   const router = useRouter();
   const { getProvider } = useContext(WalletContext);
   const [tokens, setTokens] = useState([]);
-  const [battleResult, setBattleResult] = useState({
+  const initialBattleResult = {
     battleText: [],
     winner: "",
     gold: 0,
-  });
+  };
+  const [battleResult, setBattleResult] = useState(initialBattleResult);
   const loginCharacterTokenId = Cookies.get("loginCharacterTokenId");
   useEffect(() => {
     const fetchTokens = async () => {
@@ -29,6 +30,7 @@ export default function Battle() {
     fetchTokens();
   }, []);
   const onClickEnemy = async (enemyMetadata) => {
+    setBattleResult(initialBattleResult);
     const playerMetadata = tokens[parseInt(loginCharacterTokenId)];
     const response = await fetch("/api/battle", {
       method: "POST",
@@ -70,9 +72,6 @@ function BattleMessage({ battleResult }) {
   const [goldMintStatus, setGoldMintStatus] = useState("");
   const [showGetGoldButton, setShowGetGoldButton] = useState(true);
   const { getProvider } = useContext(WalletContext);
-  useEffect(() => {
-    setShowGetGoldButton(battleResult.winner === "player");
-  }, [battleResult.winner]);
   const getGold = async () => {
     setShowGetGoldButton(false);
     setGoldMintStatus("獲得中。。。");

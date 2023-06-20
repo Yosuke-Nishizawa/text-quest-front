@@ -11,8 +11,10 @@ export default async function handler(req, res) {
   }
   const api = newApi();
   const gptRes = await api.sendMessage(message(player, enemy));
-  console.log({ player, enemy, gptRes: gptRes.text });
-  res.status(200).json(JSON.parse(gptRes.text));
+  const regex = /\,(?!\s*?[\{\[\"\'\w])/g;
+  const fixedRes = gptRes.text.replace(regex, "");
+  console.log({ player, enemy, gptRes: fixedRes });
+  res.status(200).json(JSON.parse(fixedRes));
 }
 
 function message(player, enemy) {
